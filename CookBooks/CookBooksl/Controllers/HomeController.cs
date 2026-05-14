@@ -16,12 +16,7 @@ namespace CookBooks.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Получаем 6 последних рецептов
-            var latestRecipes = await _db.Recipes
-                .Include(r => r.Author)
-                .OrderByDescending(r => r.CreatedAt)
-                .Take(6)
-                .ToListAsync();
+            var latestRecipes = new List<Recipe>(); 
 
             return View(latestRecipes);
         }
