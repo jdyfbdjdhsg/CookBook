@@ -1,0 +1,96 @@
+﻿@model List<CookBooks.Models.Recipe>
+
+@{
+    ViewBag.Title = "Рецепты — CookBooks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/style.css" />
+    <link rel="stylesheet" href="~/assets/recept.css" />
+}
+
+@if (TempData["Success"] != null)
+{
+    <div style="background: #4CAF50; color: white; padding: 15px; text-align: center; margin: 20px; border-radius: 10px;">
+        @TempData["Success"]
+    </div>
+}
+
+<header class="hed__rec">
+    <div class="container">
+        <div class="hedRec__items">
+            <div class="hedRec__text">
+                <h2>Дайте волю своему внутреннему шеф-повару</h2>
+                <p>Откройте для себя мир кулинарных изысков, познакомившись с сокровищницей разнообразных рецептов</p>
+            </div>
+            <div class="hedRec__input">
+                <img src="~/assets/img/Search.svg" alt="">
+                <input class="rec__input" type="text" placeholder="поиск рецептов" id="searchInput">
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="main__rec">
+    <div class="container__main">
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <div style="display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 30px;">
+                <a href="/Recipes/Create" class="btn reg__btn" style="padding: 8px 20px;">Добавить рецепт</a>
+                <a href="/Recipes/MyRecipes" class="btn ex__btn" style="padding: 8px 20px;">Мои рецепты</a>
+            </div>
+        }
+
+        @if (Model == null || !Model.Any())
+        {
+            <div style="text-align: center; padding: 100px 0;">
+                <p style="font-size: 18px; color: #666;">Пока нет рецептов</p>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a href="/Recipes/Create" class="btn reg__btn" style="margin-top: 20px;">➕ Добавить первый рецепт</a>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="rec__items" id="recipesGrid">
+                @foreach (var recipe in Model)
+                {
+                    <div class="rec__item" data-title="@recipe.Title.ToLower()">
+                        <a href="/Recipes/Details/@recipe.Id" style="text-decoration: none; color: inherit; display: block;">
+                            <img class="item__img" src="@(string.IsNullOrEmpty(recipe.ImageUrl) ? "/assets/img/rec__item.png" : recipe.ImageUrl)" alt="@recipe.Title">
+                            <div class="item__text">
+                                <h3>@recipe.Title</h3>
+                                <div class="item__time">
+                                    <img src="~/assets/img/Clock.svg" alt="">
+                                    <p>@recipe.CookingTime минут</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const items = document.querySelectorAll('.rec__item');
+                items.forEach(item => {
+                    const title = item.getAttribute('data-title') || '';
+                    if (title.includes(searchTerm) || searchTerm === '') {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+    </script>
+}

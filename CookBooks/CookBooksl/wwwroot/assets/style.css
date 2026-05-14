@@ -1,0 +1,420 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    color: #000;
+    font-family: "Inter", sans-serif;;
+}
+
+img {
+    object-fit: contain;
+    flex-shrink: 0;
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    padding-left: 0;
+}
+
+ul>li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    padding: 0;
+    margin: 0;
+}
+
+hr {
+    margin: 0 5%;
+    border-color: #FDB646;
+    margin-bottom: 35px;
+}
+
+button, input {
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.btn {
+    display: inline-block;
+    color: #fff;
+    font-size: 16px;
+    padding: 13px 32px;
+    border-radius: 15px 0;
+    box-shadow: 0px 5px 10px 0px rgba(47, 48, 47, 1);
+}
+
+/* Nav */
+.nav {
+    background: #FCF3F5;
+}
+
+.nav__items {
+    display: block;
+    content: "";
+    border-bottom: 3px solid #FDB646;
+    border-radius: 2px;
+    bottom: -15px;
+}
+
+.nav__items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 80px;  /* фиксируем минимальную высоту */
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.nav__items ul {
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: 35px;
+    margin: 0;
+    padding: 0;
+    color: #A17023;
+}
+
+.nav__items ul li{
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.nav__items ul li a {
+    display: inline-block;
+    padding: 10px 0;
+}
+
+/* .active {
+    color: #FDB646;
+}
+
+.active::after {
+    content: "";
+    display: block;
+    width: 65px;
+    height: 3px;
+    background-color: #FDB646;
+    position: absolute;
+    top: 90%;
+    left: 0;
+    z-index: 1;
+} */
+
+.nav__items ul li a:hover {
+    color: #FDB646;
+}
+
+.nav__items ul li a img {
+    max-width: 25px;
+    min-height: 25px;
+}
+
+/* Header */
+
+.header {
+    position: relative;
+    margin: 18px 0;
+}
+
+.header__items {
+    display: flex;
+    justify-content: space-between;
+    z-index: 1;
+}
+
+.header__text {
+    margin: auto 0;
+    text-align: center;
+}
+
+.header__title {
+    font-size: 35px;
+    font-weight: bold;
+    background: -webkit-linear-gradient(#C91937, #FECE84);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.wrap { 
+  height: 3em; /* показываем ровно одну строку */
+  overflow: hidden; 
+}
+
+.ticker { 
+  animation: up 8s cubic-bezier(0.4, 0, 0.2, 1) infinite; 
+}
+
+@keyframes up {
+  /* Слово 1 — стоит */
+  0%   { transform: translateY(0) }
+  15%  { transform: translateY(0) }
+  /* Слово 2 — стоит */
+  40%  { transform: translateY(-2.7em) }
+  /* Слово 3 — стоит */
+  65%  { transform: translateY(-5.2em) }
+  /* Слово 4 — стоит */
+  90%  { transform: translateY(-7.9em) }
+  /* Резко возвращается (не видно — за overflow: hidden) */
+  100% { transform: translateY(0) }
+}
+
+.header_desc {
+    font-size: 20px;
+    margin-bottom: 83px;
+}
+
+.header__decor {
+    position: absolute;
+    z-index: -100;
+}
+
+.pineapple {
+    right: 509px;
+}
+
+.sup {
+    top: 322px;
+    right: 100px;
+}
+
+.meat {
+    bottom: 0;
+    right: 570px;
+}
+
+.header__btn {
+    display: flex;
+    gap: 70px;
+    justify-content: center;
+
+}
+
+.reg__btn {
+    background-color: #C91937;
+}
+
+.ex__btn {
+    background-color: #FDB646;
+}
+
+.hed__icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 600px;
+}
+
+.hed__icons img {
+    max-width: 45px;
+}
+
+.hed__icons span{
+    border: 3px solid #FDB646;
+    width: 400px;
+    height: 0;
+    border-radius: 5px;
+}
+
+/* Check */
+.check {
+    background: url(/assets/img/check_back.png) no-repeat;
+    background-size: cover;
+    padding: 100px 0;
+}
+
+.check__text {
+    text-align: center;
+}
+
+.check__text h2 {
+    background: -webkit-linear-gradient(#C91937, #FECE84);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.check__text p {
+    font-weight: 500;
+    line-height: 2;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.check__card {
+    position: relative;
+    background: linear-gradient(rgba(201, 25, 55, .35), rgba(245, 209, 153, .17));
+    max-width: 338px;
+    min-width: calc(33.333% - 16px); /* 3 карточки в ряд */
+    text-align: center;
+    margin-top: 200px;
+    padding-top: 90px;
+    padding-bottom: 50px;
+    border-radius: 36px 10px;
+}
+
+    .check__card img {
+        position: absolute;
+        top: -130px;
+        right: 100px;
+        width: 199px;
+        height: 199px;
+        border: 1px solid black;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+.check__card h3 {
+    font-size: 29px;
+    margin-bottom: 10px;
+}
+
+.card__type {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.check__card p {
+    font-weight: 500;
+}
+
+/* Слайдер */
+.slider {
+  position: relative;
+  overflow: hidden;
+  margin-top: 48px;
+}
+
+.slider__track {
+  display: flex;
+  gap: 24px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Ширина карточки считается в JS */
+}
+
+/* Кнопки */
+.slider__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+.slider__btn:hover {
+  background: #FDB646;
+}
+
+.slider__btn--prev { left: 8px; }
+.slider__btn--next { right: 8px; }
+
+/* Delicions */
+.main {
+    background: url(/assets/img/Delitions.png) no-repeat;
+    background-size: cover;
+    padding: 70px 0;
+}
+
+.delicious {
+    display: flex;
+    gap: 90px;
+    align-items: center;
+}
+
+.deli__text h2{
+    background: -webkit-linear-gradient(#C91937, #FECE84);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.deli__btn {
+    display: flex;
+    gap: 30px;
+}
+
+/* Footer */
+.footer {
+    background: #FCF3F5;
+    padding: 100px 0;
+}
+
+.foot__items {
+    display: flex;
+    gap: 77px;
+}
+
+.foot__book {
+    max-width: 490px;
+}
+
+.foot__book h3 {
+    font-size: 32px;
+
+}
+
+.foot__cont {
+    text-align: right;
+}
+
+.foot__nav {
+    text-align: center;
+}
+
+.foot__nav h3, .foot__cont h3 {
+    font-size: 24px;
+}
+
+.foot__nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.foot__lic {
+    display: flex;
+    max-width: 520px;
+    gap: 10px;
+}
+
+.lic__text {
+    line-height: 0;
+}
+

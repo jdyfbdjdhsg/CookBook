@@ -1,0 +1,74 @@
+.singl__ingridient ul > li {
+    list-style: disc inside;
+}
+
+.singl__instruction ul > li {
+    list-style: decimal;
+}
+
+/* Main */
+.shapka__desc {
+    display: flex;
+    gap: 30px;
+    margin: 32px 0;
+}
+
+.singl__shapka {
+    max-width: 525px;
+    margin: 70px 0 112px;
+}
+
+.desc__time {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.desc__dif {
+    display: flex;
+    align-items: center;
+}
+
+.singl__shapka h2 {
+    background: -webkit-linear-gradient(#C91937, #FECE84);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 36px;
+}
+
+.singl__shapka h4 {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.desc__time img {
+    max-width: 25px;
+}
+
+.singl__ingridient {
+    margin: 50px 0;
+}
+
+.singl__instruction {
+    margin-bottom: 50px;
+}
+
+.singl__main > img {
+    position: absolute;
+    right: 100px;
+    top: 150px;
+    width: 300px;
+    border-radius: 20px;
+    z-index: -1;
+}
+
+@media (max-width: 768px) {
+    .singl__main > img {
+        display: none;
+    }
+
+    .shapka__desc {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+}

@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Регистрация — CookBooks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main style="min-height:70vh; display:flex; align-items:center; justify-content:center; padding:60px 24px;">
+    <div style="background:linear-gradient(rgba(201,25,55,.10),rgba(245,209,153,.13));
+                border-radius:36px 10px; padding:50px 48px;
+                max-width:440px; width:100%;
+                box-shadow:0 8px 32px rgba(0,0,0,0.10);">
+
+        <h2 style="font-size:32px; margin-bottom:8px; color:#C91937;">
+            Регистрация
+        </h2>
+        <p style="margin-bottom:32px; color:#555;">Создайте аккаунт и сохраняйте любимые рецепты</p>
+
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div style="background: #ffebee; color: #c62828; padding: 10px; border-radius: 10px; margin-bottom: 20px; text-align: center;">
+                @ViewBag.Error
+            </div>
+        }
+
+        <form method="post" action="/Account/Register">
+            <div style="margin-bottom:20px;">
+                <label style="display:block; font-weight:600; margin-bottom:6px;">Имя пользователя</label>
+                <input type="text" name="userName" class="auth-input" placeholder="Иван Иванов" required />
+            </div>
+
+            <div style="margin-bottom:20px;">
+                <label style="display:block; font-weight:600; margin-bottom:6px;">Email</label>
+                <input type="email" name="email" class="auth-input" placeholder="you@example.com" required />
+            </div>
+
+            <div style="margin-bottom:20px;">
+                <label style="display:block; font-weight:600; margin-bottom:6px;">Пароль</label>
+                <input type="password" name="password" class="auth-input" placeholder="Минимум 6 символов" required />
+            </div>
+
+            <div style="margin-bottom:28px;">
+                <label style="display:block; font-weight:600; margin-bottom:6px;">Подтвердите пароль</label>
+                <input type="password" name="confirmPassword" class="auth-input" placeholder="Повторите пароль" required />
+            </div>
+
+            <button type="submit" class="btn reg__btn"
+                    style="width:100%; border-radius:15px 0; font-size:16px;">
+                Создать аккаунт
+            </button>
+        </form>
+
+        <p style="margin-top:24px; text-align:center; color:#555;">
+            Уже есть аккаунт?
+            <a href="/Account/Login" style="color:#C91937; font-weight:600;">Войти</a>
+        </p>
+    </div>
+</main>
+
+<style>
+    .auth-input {
+        width:100%; padding:10px 14px;
+        border:2px solid #FDB646; border-radius:10px 0;
+        font-size:15px; font-family:"Inter",sans-serif;
+        background:#fff; transition:border-color 0.2s; box-sizing:border-box;
+    }
+    .auth-input:focus { border-color:#C91937; outline:none; }
+</style>

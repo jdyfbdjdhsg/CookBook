@@ -1,0 +1,76 @@
+/* Header */
+.hedRec__items {
+    
+    background: url(/assets/img/hed_rec.png) no-repeat;
+    background-size: cover;
+    padding: 90px 150px;
+    margin: 80px 0;
+    text-align: center;
+}
+
+.hedRec__text {
+    max-width: 370px;
+}
+
+.hedRec__text h2 {
+    font-size: 24px;
+}
+
+.hedRec__input {
+    position: relative;
+    max-width: 370px;
+}
+
+.hedRec__input img {
+    position: absolute;
+    top: 4px;
+    left: 75px;
+}
+
+.rec__input {
+    background: rgba(0, 0, 0, 0.44);
+    color: rgba(255, 255, 255, 0.26);
+    padding: 5px 40px;
+}
+/* Main */
+.rec__items {
+    display: grid;
+    grid-template-columns: repeat(4, 247px);
+    gap: 50px;
+    justify-content: space-between;
+}
+
+.container__main{
+    margin: 81px 100px;
+}
+
+.rec__item {
+    width: 222px;
+    background: linear-gradient(#C91937, #FDB646);
+    padding: 0;
+    border-radius: 53px 0;
+    overflow: hidden;
+}
+
+
+.rec__item .item__img {
+    width: 100%;
+    height: 247px;
+    object-fit: cover;
+    display: block;
+}
+
+.item__text {
+    display: flex;
+    margin: 0 26px 0 5px;
+    align-items: center;
+}
+
+.item__time {
+    display: flex;
+    gap: 8px;
+}
+
+.item__time img {
+    max-width: 25px;
+}

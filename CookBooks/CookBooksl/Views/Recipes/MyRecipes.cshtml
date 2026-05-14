@@ -1,0 +1,55 @@
+﻿@model List<CookBooks.Models.Recipe>
+
+@{
+    ViewBag.Title = "Мои рецепты — CookBooks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/style.css" />
+    <link rel="stylesheet" href="~/assets/recept.css" />
+}
+
+<div class="container__main">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2 style="color: #C91937;">Мои рецепты</h2>
+        <a href="/Recipes/Create" class="btn reg__btn">Добавить рецепт</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div style="text-align: center; padding: 100px 0;">
+            <p style="font-size: 18px; color: #666;">У вас пока нет рецептов</p>
+            <a href="/Recipes/Create" class="btn reg__btn" style="margin-top: 20px; display: inline-block;">➕ Добавить первый рецепт</a>
+        </div>
+    }
+    else
+    {
+        <div class="rec__items">
+            @foreach (var recipe in Model)
+            {
+                <div class="rec__item">
+                    <a href="/Recipes/Details/@recipe.Id" style="text-decoration: none; color: inherit;">
+                        <img class="item__img" src="@(recipe.ImageUrl ?? "/assets/img/rec__item.png")" alt="@recipe.Title">
+                        <div class="item__text">
+                            <div>
+                                <h3>@recipe.Title</h3>
+                                <div class="item__time">
+                                    <img src="~/assets/img/Clock.svg" alt="">
+                                    <p>@recipe.CookingTime мин</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div style="padding: 10px; display: flex; gap: 10px; justify-content: center;">
+                        <a href="/Recipes/Edit/@recipe.Id" class="btn ex__btn" style="padding: 5px 15px; font-size: 12px;">✏️</a>
+                        <form action="/Recipes/Delete/@recipe.Id" method="post" onsubmit="return confirm('Удалить рецепт?');" style="display: inline;">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" style="background: #dc3545; border: none; border-radius: 15px 0; padding: 5px 15px; color: white; cursor: pointer;">🗑️</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

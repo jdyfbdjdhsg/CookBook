@@ -1,0 +1,95 @@
+﻿@model CookBooks.Models.RecipeDetailsViewModel
+
+@{
+    ViewBag.Title = $"{Model.Title} — CookBooks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/style.css" />
+    <link rel="stylesheet" href="~/assets/singleRec.css" />
+}
+
+@if (TempData["Success"] != null)
+{
+    <div style="background: #4CAF50; color: white; padding: 15px; text-align: center; margin: 20px; border-radius: 10px;">
+        @TempData["Success"]
+    </div>
+}
+
+<main class="singl__main">
+    <img src="@(Model.ImageUrl ?? "/assets/img/rec__item.png")" alt="@Model.Title">
+    <div class="container">
+        <div class="singl__shapka">
+            <h2>@Model.Title</h2>
+            <h4>Автор: @Model.AuthorName</h4>
+            <div class="shapka__desc">
+                <div class="desc__time">
+                    <img src="~/assets/img/Clock.svg" alt="">
+                    <p>@Model.CookingTime минут</p>
+                </div>
+                <div class="desc__dif">
+                    <p>Сложность:</p>
+                    <p>
+                        &nbsp;
+                        @switch (Model.Difficulty)
+                        {
+                            case CookBooks.Models.DifficultyLevel.Easy:
+                                <span>Легко</span>
+                                break;
+                            case CookBooks.Models.DifficultyLevel.Medium:
+                                <span>Средне</span>
+                                break;
+                            case CookBooks.Models.DifficultyLevel.Hard:
+                                <span>Сложно</span>
+                                break;
+                        }
+                    </p>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Category))
+                {
+                    <div class="desc__dif">
+                        <p>Категория:</p>
+                        <p>&nbsp;@Model.Category</p>
+                    </div>
+                }
+            </div>
+            <h4>"@Model.Description"</h4>
+            
+            @if (User.Identity?.IsAuthenticated == true && Model.IsAuthor)
+            {
+                <div style="margin-top: 30px; display: flex; gap: 15px;">
+                    <a href="/Recipes/Edit/@Model.Id" class="btn ex__btn" style="padding: 10px 20px;">✏️ Редактировать</a>
+                    <form action="/Recipes/Delete/@Model.Id" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить этот рецепт?');" style="display: inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn" style="background: #dc3545; padding: 10px 20px;">🗑️ Удалить</button>
+                    </form>
+                </div>
+            }
+        </div>
+
+        <div class="singl__ingridient">
+            <h4>Ингредиенты</h4>
+            <ul>
+                @foreach (var ingredient in Model.Ingredients.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <li>@ingredient.Trim()</li>
+                }
+            </ul>
+        </div>
+
+        <div class="singl__instruction">
+            <h4>Инструкция</h4>
+            <ul>
+                @foreach (var step in Model.Instructions.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <li>@step.Trim()</li>
+                }
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin: 50px 0;">
+            <a href="/Recipes" class="btn ex__btn">Назад к рецептам</a>
+        </div>
+    </div>
+</main>

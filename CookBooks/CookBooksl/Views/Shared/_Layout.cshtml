@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="~/assets/style.css">
+    <link rel="stylesheet" href="~/assets/mobile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <style>
+            a, button, .btn, .rec__item, .slider__btn, .check__card,
+            .nav__items ul li a, .rec__item h3 a, .check__card h3 a,
+            .deli__btn .btn, .header__btn .btn {
+                cursor: pointer;
+            }
+
+                a:hover, button:hover, .btn:hover {
+                    cursor: pointer;
+                }
+
+            p, h1, h2, h3, h4, span, label, .header_desc, .card__type span,
+            .item__time p, .desc__time p, .desc__dif p, .foot__book p {
+                cursor: default;
+            }
+
+            .rec__item {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .rec__item:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+                }
+
+            .check__card {
+                transition: transform 0.3s ease;
+            }
+
+                .check__card:hover {
+                    transform: translateY(-5px);
+                }
+
+            .btn {
+                transition: all 0.3s ease;
+            }
+
+                .btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+                }
+
+            .user-name-link {
+                cursor: pointer;
+                text-decoration: none;
+                font-weight: 600;
+                color: #C91937;
+            }
+
+                .user-name-link:hover {
+                    text-decoration: underline;
+                }
+    </style>
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav__items">
+                <div class="logo">
+                    <a href="/">CookBooks</a>
+                </div>
+                <ul>
+                    <li><a href="/" class="active">Главная</a></li>
+                    <li><a href="/Recipes">Рецепты</a></li>
+                    <li><a href="#">О нас</a></li>
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <li style="display:flex; align-items:center; gap:12px;">
+                            <a href="/Recipes/Profile" class="user-name-link" title="Мой профиль">@User.Identity.Name</a>
+                            <form action="/Account/Logout" method="post" style="display:inline; margin:0;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" style="background:none; border:none; cursor:pointer; color:#9A3412; font-size:14px; padding:0; font-family:inherit;">Выйти</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="/Account/Login" title="Войти">
+                                <img src="~/assets/img/user.svg" alt="Войти" style="width:25px;">
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    @RenderBody()
+
+    <footer class="footer">
+        <div class="container">
+            <div class="foot__items">
+                <div class="foot__book">
+                    <h3>CookBooks</h3>
+                    <p>Добро пожаловать, здесь мы готовим с удовольствием и по настроению! Познакомьтесь с разнообразными, восхитительными рецептами.</p>
+                    <p>Приятной готовки!</p>
+                </div>
+                <div class="foot__nav">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/Recipes">Рецепты</a></li>
+                        <li><a href="#">О нас</a></li>
+                    </ul>
+                </div>
+                <div class="foot__cont">
+                    <h3>Наши контакты</h3>
+                    <p>email: info@cookbooks.ru</p>
+                </div>
+            </div>
+            <hr>
+            <div class="foot__lic">
+                <img src="~/assets/img/Copyright.svg" alt="">
+                <div class="lic__text">
+                    <p>2026 CookBooks. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

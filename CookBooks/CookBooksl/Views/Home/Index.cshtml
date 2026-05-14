@@ -1,0 +1,196 @@
+﻿@model List<CookBooks.Models.Recipe>
+
+@{
+    ViewBag.Title = "CookBooks — Главная";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/style.css" />
+}
+
+<header class="header">
+    <img class="header__decor pineapple" src="~/assets/img/pineapple.svg" alt="">
+    <img class="header__decor sup" src="~/assets/img/sup.svg" alt="">
+    <img class="header__decor meat" src="~/assets/img/meat.svg" alt="">
+    <div class="container">
+        <div class="header__items">
+            <div class="header__text">
+                <div class="wrap">
+                    <div class="ticker">
+                        <h1 class="header__title">Далеко от дома?</h1>
+                        <h1 class="header__title">Хотите приготовить что-то новое?</h1>
+                        <h1 class="header__title">Вам нужно вдохновение от шеф-повара?</h1>
+                        <h1 class="header__title">Ищете секретные ингредиенты?</h1>
+                    </div>
+                </div>
+
+                <div class="header_desc">
+                    мы поможем вам, ознакомьтесь с рецептами от домашнего шеф-повара.
+                </div>
+
+                <div class="header__btn">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a class="reg__btn btn" href="/Recipes/Create">Добавить рецепт</a>
+                        <a class="ex__btn btn" href="/Recipes">Все рецепты</a>
+                    }
+                    else
+                    {
+                        <a class="reg__btn btn" href="/Account/Register">Зарегистрироваться</a>
+                        <a class="ex__btn btn" href="/Recipes">Посмотреть</a>
+                    }
+                </div>
+            </div>
+
+            <img src="~/assets/img/main_pizza.png" alt="">
+        </div>
+
+        <div class="hed__icons">
+            <a href="#"><img src="~/assets/img/github-logo_icon-icons.com_73546.svg" alt=""></a>
+            <span></span>
+        </div>
+    </div>
+</header>
+
+<section class="check">
+    <div class="container">
+        <div class="check__items">
+            <div class="check__text">
+                <h2>Ознакомьтесь с новым рецептом</h2>
+                <p>
+                    Каждый день — новое блюдо, новый вкус, новое вдохновение.
+                    Найдите рецепт, который станет вашим любимым.
+                </p>
+            </div>
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="slider">
+                    <div class="slider__track" id="sliderTrack">
+                        @foreach (var recipe in Model)
+                        {
+                            <div class="check__card">
+                                <a href="/Recipes/Details/@recipe.Id" style="text-decoration: none; color: inherit; display: block;">
+                                    <img src="@(string.IsNullOrEmpty(recipe.ImageUrl) ? "/assets/img/check_card.png" : recipe.ImageUrl)" alt="@recipe.Title">
+                                    <h3>@recipe.Title</h3>
+                                    <div class="card__type">
+                                        <span>@recipe.CookingTime мин</span>
+                                        <span>•</span>
+                                        <span>
+                                            @switch (recipe.Difficulty)
+                                            {
+                                                case CookBooks.Models.DifficultyLevel.Easy:
+                                                    <span>Легко</span>
+                                                    break;
+                                                case CookBooks.Models.DifficultyLevel.Medium:
+                                                    <span>Средне</span>
+                                                    break;
+                                                case CookBooks.Models.DifficultyLevel.Hard:
+                                                    <span>Сложно</span>
+                                                    break;
+                                            }
+                                        </span>
+                                    </div>
+                                    <p>@(recipe.Description.Length > 100 ? recipe.Description.Substring(0, 100) + "..." : recipe.Description)</p>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    <button class="slider__btn slider__btn--prev">‹</button>
+                    <button class="slider__btn slider__btn--next">›</button>
+                </div>
+            }
+            else
+            {
+                <div style="text-align: center; padding: 100px 0;">
+                    <p style="font-size: 18px; color: #666;">Пока нет рецептов</p>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a href="/Recipes/Create" class="btn reg__btn" style="margin-top: 20px;">Добавить первый рецепт</a>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<main class="main">
+    <div class="container">
+        <div class="delicious">
+            <img src="~/assets/img/deli.png" alt="">
+            <div class="deli__text">
+                <h2>
+                    От кухни к столу
+                    Откройте для себя Ваше следующее вкусное блюдо!
+                </h2>
+                <div class="deli__btn">
+                    @if (User.Identity?.IsAuthenticated != true)
+                    {
+                        <a class="reg__btn btn" href="/Account/Register">Зарегистрироваться</a>
+                    }
+                    <a class="ex__btn btn" href="/Recipes">Все рецепты</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+        const track = document.getElementById('sliderTrack');
+        const btnPrev = document.querySelector('.slider__btn--prev');
+        const btnNext = document.querySelector('.slider__btn--next');
+        let currentIndex = 0;
+        
+        if (track && track.children.length > 0) {
+            function getCardWidth() {
+                const card = track.querySelector('.check__card');
+                if (!card) return 300;
+                const width = card.offsetWidth;
+                const gap = 24;
+                return width + gap;
+            }
+            
+            function getMaxIndex() {
+                const cardsCount = track.children.length;
+                let visibleCards = 3;
+                if (window.innerWidth <= 768) visibleCards = 1;
+                return Math.max(0, cardsCount - visibleCards);
+            }
+            
+            function updateSlider() {
+                const step = getCardWidth();
+                const transform = -step * currentIndex;
+                track.style.transform = `translateX(${transform}px)`;
+            }
+            
+            if (btnNext) {
+                btnNext.addEventListener('click', () => {
+                    const maxIndex = getMaxIndex();
+                    if (currentIndex < maxIndex) {
+                        currentIndex++;
+                        updateSlider();
+                    }
+                });
+            }
+            
+            if (btnPrev) {
+                btnPrev.addEventListener('click', () => {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateSlider();
+                    }
+                });
+            }
+            
+            window.addEventListener('resize', () => {
+                const maxIndex = getMaxIndex();
+                if (currentIndex > maxIndex) currentIndex = maxIndex;
+                updateSlider();
+            });
+            
+            updateSlider();
+        }
+    </script>
+}

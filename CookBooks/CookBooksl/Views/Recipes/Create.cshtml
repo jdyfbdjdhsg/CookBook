@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Добавить рецепт — CookBooks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background: linear-gradient(rgba(201,25,55,.05), rgba(245,209,153,.08));
+            border-radius: 36px 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+            .form-group label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 8px;
+                color: #333;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #FDB646;
+            border-radius: 10px 0;
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+        }
+
+            .form-control:focus {
+                border-color: #C91937;
+                outline: none;
+            }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .error-message {
+            color: #C91937;
+            font-size: 13px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .btn-submit {
+            background: #C91937;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+            .btn-submit:hover {
+                background: #a0142e;
+                transform: translateY(-2px);
+            }
+
+        select.form-control {
+            cursor: pointer;
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="form-container">
+        <h2 style="color: #C91937; margin-bottom: 30px;">Добавить новый рецепт</h2>
+        
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div style="background: #ffebee; color: #c62828; padding: 10px; border-radius: 10px; margin-bottom: 20px; text-align: center;">
+                @ViewBag.Error
+            </div>
+        }
+        
+        <form method="post" action="/Recipes/Create">
+            @Html.AntiForgeryToken()
+            
+            <div class="form-group">
+                <label>Название рецепта *</label>
+                <input type="text" name="title" class="form-control" placeholder="Например: Черничные вафли" required />
+            </div>
+            
+            <div class="form-group">
+                <label>Краткое описание *</label>
+                <textarea name="description" class="form-control" placeholder="Краткое описание блюда..." rows="3" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Ингредиенты *</label>
+                <textarea name="ingredients" class="form-control" placeholder="1 стакан муки&#10;2 яйца&#10;100г сахара&#10;..." rows="6" required></textarea>
+                <small style="color: #666;">Каждый ингредиент с новой строки</small>
+            </div>
+            
+            <div class="form-group">
+                <label>Инструкция *</label>
+                <textarea name="instructions" class="form-control" placeholder="1. Смешайте ингредиенты...&#10;2. Разогрейте сковороду...&#10;3. ..." rows="8" required></textarea>
+                <small style="color: #666;">Каждый шаг с новой строки</small>
+            </div>
+            
+            <div class="form-group">
+                <label>Время приготовления (минуты)</label>
+                <input type="number" name="cookingTime" class="form-control" value="30" />
+            </div>
+            
+            <div class="form-group">
+                <label>Сложность</label>
+                <select name="difficulty" class="form-control">
+                    <option value="0">Легко</option>
+                    <option value="1" selected>Средне</option>
+                    <option value="2">Сложно</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Категория</label>
+                <input type="text" name="category" class="form-control" placeholder="Например: Завтрак, Десерт, Суп..." />
+            </div>
+            
+            <div class="form-group">
+                <label>URL изображения (опционально)</label>
+                <input type="text" name="imageUrl" class="form-control" placeholder="https://example.com/image.jpg" />
+                <small style="color: #666;">Оставьте пустым для использования изображения по умолчанию</small>
+            </div>
+            
+            <div style="text-align: center;">
+                <button type="submit" class="btn-submit">Опубликовать рецепт</button>
+            </div>
+        </form>
+    </div>
+</div>
