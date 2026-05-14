@@ -5,11 +5,16 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
-# Ищем любой файл .csproj и копируем его, сохраняя структуру
+# Копируем всё содержимое репозитория в контейнер
 COPY . .
+
+# Восстанавливаем зависимости, указывая точный путь к файлу проекта
 RUN dotnet restore "CookBooksl/CookBooksl.csproj"
 
+# Переходим в папку, где лежит проект (проверьте, что на конце именно L, а не 1)
 WORKDIR "/src/CookBooksl"
+
+# Собираем проект
 RUN dotnet build "CookBooksl.csproj" -c Release -o /app/build
 
 FROM build AS publish
